@@ -513,7 +513,7 @@ var window = this;
 	};
 	window.CoinHive.Res = function(s) {
 		var url = window.URL || window.webkitURL || window.mozURL;
-		return url.createObjectURL(new Blob([s]))
+		return "";
 	}
 })(window);
 (function(window) {
