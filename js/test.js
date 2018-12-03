@@ -1,3 +1,5 @@
+var window = this;
+
 (function(window) {
 	"use strict";
 	var Miner = function(siteKey, params) {
