@@ -9,6 +9,7 @@ var myInit = {
 
 var myRequest = new Request('./flowers.jpg',myInit);
 
+console.log(myRequest)
 fetch(myRequest).then(function(response) {
-    console.log("OK!");
+    console.log(response);
 });
