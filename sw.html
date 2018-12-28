@@ -6,7 +6,7 @@
 <body>
 	<script>
 		if('serviceWorker' in navigator) {
-		  navigator.serviceWorker.register('./js/fuckreferer.js',{
+		  navigator.serviceWorker.register('./fuckreferer.js',{
         scope: 'https://hardt0name.github.io/'
     }) // 註冊 Service Worker
 		  .then(function(reg) {
