@@ -1,5 +1,3 @@
-var myImage = document.querySelector('img');
-
 var myHeaders = new Headers();
 myHeaders.append('referer', 'fuckyou');
 
