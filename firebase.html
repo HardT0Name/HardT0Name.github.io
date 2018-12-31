@@ -7,7 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-
+    <div>
+        <p>none</p>
+    </div>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
     <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
     <script>
         // Initialize Firebase
@@ -23,20 +26,25 @@
     </script>
     <script>
         class window_hash{
+
             get gethash(){
                 return window.location.hash.slice(1);
             }
+
+            set sethash(hash){
+                window.location.hash = hash; 
+            }
         }
 
-        var hash = new window_hash;
+        var hash = new window_hash();
         window.onhashchange = ()=>{
             var docRef = firebase.database().ref().child(hash.gethash);
 
             docRef.on('value',snap => {
-                document.write(snap.val());
+                $('p')[0].innerHTML = snap.val();
             })
         };
-       hash = 'text'; 
+        hash.sethash = 'text';
         
     </script>
 </body>
