@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+        apiKey: "AIzaSyARYN6C2H_komCRTZdDI1G-YKsjh60O6OY",
+        authDomain: "eramps-1385.firebaseapp.com",
+        databaseURL: "https://eramps-1385.firebaseio.com",
+        projectId: "eramps-1385",
+        storageBucket: "eramps-1385.appspot.com",
+        messagingSenderId: "625550429277"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script>
+        var docRef = firebase.database().ref().child('text');
+            docRef.on('value',snap => {
+            document.write(snap.val());
+        })
+    </script>
+</body>
+</html>
