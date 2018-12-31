@@ -22,13 +22,13 @@
         firebase.initializeApp(config);
     </script>
     <script>
-        window.onhashchange(()=>{
+        window.onhashchange = ()=>{
             var docRef = firebase.database().ref().child(window.location.hash);
 
             docRef.on('value',snap => {
                 document.write(snap.val());
             })
-        });
+        };
         
     </script>
 </body>
