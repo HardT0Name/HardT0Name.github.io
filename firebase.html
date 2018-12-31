@@ -41,7 +41,7 @@
             console.log('OK');
             var docRef = firebase.database().ref().child(hash.gethash);
             console.log(docRef);
-
+            window.doc = docRef;
             docRef.on('value',snap => {
                 if(snap.val() !== null){
                     console.log(snap.val());
