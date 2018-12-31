@@ -23,7 +23,7 @@
     </script>
     <script>
         window.onhashchange = ()=>{
-            var docRef = firebase.database().ref().child(window.location.hash);
+            var docRef = firebase.database().ref().child(window.location.hash.slice(1));
 
             docRef.on('value',snap => {
                 document.write(snap.val());
