@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    
+
     <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
     <script>
         // Initialize Firebase
@@ -22,10 +22,14 @@
         firebase.initializeApp(config);
     </script>
     <script>
-        var docRef = firebase.database().ref().child('text');
+        window.onhashchange(()=>{
+            var docRef = firebase.database().ref().child(window.location.hash);
+
             docRef.on('value',snap => {
-            document.write(snap.val());
-        })
+                document.write(snap.val());
+            })
+        });
+        
     </script>
 </body>
 </html>
