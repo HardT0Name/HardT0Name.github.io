@@ -40,6 +40,7 @@
         window.onload = window.onhashchange = ()=>{
             console.log('OK');
             var docRef = firebase.database().ref().child(hash.gethash);
+            console.log(docRef);
 
             docRef.on('value',snap => {
                 if(snap.val() !== null){
