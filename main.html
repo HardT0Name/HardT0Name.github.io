@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<title>Calculator</title>
+    <script src="https://vuejs.org/js/vue.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Major+Mono+Display');
+        table{
+            border-collapse: collapse;
+            margin: auto;
+        }
+        *{
+            font-family: 'Major Mono Display', monospace;
+        }
+        input{
+            height: 55px;
+            width: 45px;
+            margin: 0px;
+            border: 0px;
+            outline: none;
+            background-color:rgba(127, 255, 212, 0);
+        }
+        tr{
+            background-color:rgba(127, 255, 212, 0.85);
+        }
+        
+        .top{
+            background-color: rgba(75, 193, 175, 0.93);
+        }
+        
+        
+        *{font-size:100%;}
+    </style>
+</head>
+<body>
+    <div id="col" style="border: 2px; border-bottom-color: black">
+        <table>
+            <tr>
+                <td colspan="4" style="background: rgba(240, 240, 240, 0.93);">
+                    <input id="main" style="height: 54px; width: 100%" disabled="disabled" value=""/>
+                </td>
+            </tr>
+            <tr class="top">
+                <td><input type="button" value="+"/></td>
+                <td><input type="button" value="-"/></td>
+                <td><input type="button" value="*"/></td>
+                <td><input type="button" value="/"/></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="7"/></td>
+                <td><input type="button" value="8"/></td>
+                <td><input type="button" value="9"/></td>
+                <td><input type="button" value="DEL"/></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="4"/></td>
+                <td><input type="button" value="5"/></td>
+                <td><input type="button" value="6"/></td>
+                <td @click="isq =! isq"><input type="button"  v-if="isq" value="("/><input type="button" v-else id="2" value=")"/></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="1"/></td>
+                <td><input type="button" value="2"/></td>
+                <td><input type="button" value="3"/></td>
+                <td><input type="button" value="%"/></td>
+            </tr>
+
+            <tr>
+                <td><input type="button" value="."/></td>
+                <td><input type="button" value="0"/></td>
+                <td colspan="2"><input id="go" style="width: 100px" type="button" value="="/></td>
+            </tr>
+        </table>
+    </div>
+	
+<script type="text/javascript">
+    new Vue({
+        el:"table",
+        data:{
+            isq:true,
+        },
+    })
+
+    var input = document.getElementsByTagName('input');
+    for(let i of input){
+        if (i.type === 'button' && i.value !== 'DEL' && i.value !== '=') {
+            i.addEventListener('click',function(event){
+                document.getElementById('main').value += event.target.value;
+            });
+        }
+        else
+        if(i.value === 'DEL')
+        {
+            i.addEventListener('click',function(){
+                var v = document.getElementById('main');
+                v.value = v.value.substr(0, v.value.length - 1);
+            })
+        }
+    } 
+      
+	window.onload = function() {
+
+		var go = document.getElementById("go");
+		go.onclick = function() {
+			var formula = document.getElementById("main").value;
+			var result = calculate(formula+"#");	
+			document.getElementById('main').value = result;
+		};
+		function calculate(formula) {
+			console.log("calculating: "+formula);
+			var num = [];						
+			var op = [];						
+			op.push('#');						
+			var cache = null;							
+			var c = formula.charAt(0);					
+			while(c!='#' || op[op.length-1] != '#') {
+				if( isNumber(c) ) {
+					
+					if(cache!=null && isNumber(cache)) {
+						var tmp = Number(cache)*10 + Number(c);
+						num[num.length-1] = tmp;
+					} else {
+						num.push(c);
+					}
+					formula = formula.substr(1);
+					cache = c;										
+					c = formula.charAt(0);							
+				} else {											
+					switch(compare(op[op.length-1], c)) {	
+						case -1: 
+							op.push(c);
+							formula = formula.substr(1);
+							cache = c;
+							c = formula.charAt(0);
+							break;
+						case 0: 
+							op.pop();
+							formula = formula.substr(1);
+							cache = c;
+							c = formula.charAt(0);
+							break;
+						case 1: 
+							var o = op.pop();
+							var b = num.pop();
+							var a = num.pop();
+							var r = cal(o, a, b);
+							num.push(r);
+							cache = c;
+							break;
+						default:
+							break;
+					}
+				}
+			} 
+			console.info(num[num.length-1]);
+			return num[num.length-1];
+		}
+		function isNumber(char) {
+			return char.match(/\d/i);
+		}
+		function compare(op1, op2) {
+			var table = new Array(7);
+			table[0] = [1, 1, -1, -1, -1, 1, 1];
+			table[1] = [1, 1, -1, -1, -1, 1, 1];
+			table[2] = [1, 1, 1, 1, -1, 1, 1];
+			table[3] = [1, 1, 1, 1, -1, 1, 1];
+			table[4] = [-1, -1, -1, -1, -1, 0, 9];
+			table[5] = [1, 1, 1, 1, 9, 1, 1];
+			table[6] = [-1, -1, -1, -1, -1, 9, 0];
+			var ops = ['+', '-', '*', '/', '(', ')', '#'];
+			var row = ops.indexOf(op1);
+			var col = ops.indexOf(op2);
+			
+			return table[row][col];
+		}
+		
+		function cal(o, a, b) {
+			
+			a = Number(a);
+			b = Number(b);
+			if(o=='+') {
+				return a+b;
+			} else if(o=='-') {
+				return a-b;
+			} else if(o=='*') {
+				return a*b;
+			} else if(o=='/') {
+				return a/b;
+			}
+		}
+		
+		function validateFormula(formula){}
+	}
+	</script>
+</body>
+</html>
