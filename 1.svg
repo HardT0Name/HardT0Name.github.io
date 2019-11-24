@@ -1,0 +1,7 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg>
+<svg>
+    <script type="test/javascript">
+        alert(1);
+    </script>
+</svg>
